@@ -8,7 +8,7 @@ on:
 jobs:
   vimdocgen:
     runs-on: ubuntu-latest
-    name: pandoc to vimdoc
+    name: markdown and emmydoc to vimdoc
     permissions:
       # Give the default GITHUB_TOKEN write permission to commit and push the
       # added or changed files to the repository.
@@ -18,7 +18,11 @@ jobs:
       - name: lemmy-help
         run: |
           curl -Lq https://github.com/numToStr/lemmy-help/releases/latest/download/lemmy-help-x86_64-unknown-linux-gnu.tar.gz | tar xz
-          ./lemmy-help ./lua/teaman/*.lua > ./doc/teaman_api.txt
+          echo "```vimdoc" > ./doc/teaman_api.md
+          echo "" >> ./doc/teaman_api.md
+          ./lemmy-help ./lua/teaman/*.lua >> ./doc/teaman_api.txt
+          echo "" >> ./doc/teaman_api.md
+          echo "```" >> ./doc/teaman_api.md
       - name: panvimdoc
         uses: kdheepak/panvimdoc@main
         with:
@@ -29,4 +33,4 @@ jobs:
         with:
           commit_message: "Auto generate vimdocs"
           branch: ${{ github.head_ref }}
-          file_pattern: doc/*.txt
+          file_pattern: doc/teaman.txt
