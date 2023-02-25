@@ -68,7 +68,7 @@ end
 ---@param arg table|nil @optional config table
 function utils.is_config(arg)
   if arg then
-    local config = require'teaman.config'
+    local config = require'teaman.config'.new()
     local config_mt = getmetatable(config)
     return type(arg) == "table" and getmetatable(arg) == config_mt
   end
