@@ -134,7 +134,13 @@ local terminal_mt = {
   end,
   __tostring = function (term)
     local fmt = "Terminal{shell=%q, bufnr=%d, winnr=%d, chanid=%d}"
-    local str = string.format(fmt, table.concat(term.config.shell) or "", term.bufnr or -1, term.winnr or -1, term.chanid or -1)
+    local str = string.format(
+      fmt,
+      table.concat(term.config.shell) or "",
+      term.bufnr or -1,
+      term.winnr or -1,
+      term.chanid or -1
+    )
     return str
   end,
 }

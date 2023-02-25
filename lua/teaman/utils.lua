@@ -24,9 +24,22 @@ utils.set_opfunc = vim.fn[vim.api.nvim_exec([[
 
 function utils.covered_lines(motion, range)
   if motion == "char" then
-    return vim.api.nvim_buf_get_text(0, range.starting[1]-1, range.starting[2], range.ending[1]-1, range.ending[2]+1, {})
+    return vim.api.nvim_buf_get_text(
+      0,
+      range.starting[1]-1,
+      range.starting[2],
+      range.ending[1]-1,
+      range.ending[2]+1,
+      {}
+    )
   elseif motion == "word" then
-    return vim.api.nvim_buf_get_text(0, range.starting[1]-1, range.starting[2], range.ending[1]-1, range.ending[2]+1, {})
+    return vim.api.nvim_buf_get_text(0,
+      range.starting[1]-1,
+      range.starting[2],
+      range.ending[1]-1,
+      range.ending[2]+1,
+      {}
+    )
   elseif motion == "line" then
     return vim.api.nvim_buf_get_lines(0, range.starting[1]-1, range.ending[1], true)
   end
