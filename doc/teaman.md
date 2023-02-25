@@ -5,5 +5,5 @@ README.md
 # Developer Documentation
 
 ```{.include}
-teaman_api.txt
+doc/teaman_api.txt
 ```
