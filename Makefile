@@ -3,17 +3,22 @@ all: lint test doc
 .PHONY: doc
 
 help:
-	echo "make TARGET"
-	echo "TARGETS"
-	# echo "\t test \t run the tests"
-	echo "\t lint \t lint the sources"
-	echo "\t doc  \t create the vim documentation"
+	@echo "make TARGET"
+	@echo
+	@echo "TARGETS"
+# @echo "    test     run the tests"
+	@echo "    lint    lint the sources"
+	@echo "    format  format the sources"
+	@echo "    doc     create the vim documentation"
 
 lint:
-	luacheck lua/teaman
+	@luacheck lua/teaman
+
+format:
+	@stylua --config-path=.stylua.toml lua/teaman
 
 doc:
-	lemmy-help ./lua/teaman/*.lua > ./doc/teaman.txt
+	@lemmy-help ./lua/teaman/*.lua > ./doc/teaman_api.txt
 
 love:
-	echo "not war"
+	@echo "not war"
