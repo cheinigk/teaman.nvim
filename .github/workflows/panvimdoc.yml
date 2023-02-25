@@ -9,6 +9,10 @@ jobs:
   vimdocgen:
     runs-on: ubuntu-latest
     name: pandoc to vimdoc
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
     steps:
       - uses: actions/checkout@v2
       - name: lemmy-help
