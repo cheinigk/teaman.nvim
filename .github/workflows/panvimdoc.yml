@@ -18,11 +18,11 @@ jobs:
       - name: lemmy-help
         run: |
           curl -Lq https://github.com/numToStr/lemmy-help/releases/latest/download/lemmy-help-x86_64-unknown-linux-gnu.tar.gz | tar xz
-          echo "```vimdoc" > ./doc/teaman_api.md
-          echo "" >> ./doc/teaman_api.md
+          echo '```vimdoc' > ./doc/teaman_api.md
+          echo '' >> ./doc/teaman_api.md
           ./lemmy-help ./lua/teaman/*.lua >> ./doc/teaman_api.md
-          echo "" >> ./doc/teaman_api.md
-          echo "```" >> ./doc/teaman_api.md
+          echo '' >> ./doc/teaman_api.md
+          echo '```' >> ./doc/teaman_api.md
       - name: panvimdoc
         uses: kdheepak/panvimdoc@main
         with:
