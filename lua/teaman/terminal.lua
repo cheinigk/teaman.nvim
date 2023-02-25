@@ -19,6 +19,8 @@ local function win_invalid(winnr)
 end
 
 local function terminal_termopen(term)
+  terminal_create_buf(term)
+  vim.api.nvim_win_set_buf(0, term.bufnr)
   local opts = {
     on_exit = function ()
       rawset(term, "chanid", nil)
@@ -139,16 +141,13 @@ local terminal_mt = {
 
 ---@brief constructs a new terminal object
 ---@param config table @config table
----@param info table @user data (arbitrary and not used by `terminal.nvim` (can be used to e.g. filter terminals)
 ---@return Terminal
-function Terminal.new(config, info)
+function Terminal.new(config)
   vim.validate({
-    config = {config, require'teaman.utils'.is_config, "config table"},
-    info = {info, "table", true},
+    config = {config, require'teaman.utils'.is_config, "Config|nil"},
   })
   local obj = {
-    config = config or require'teaman.config',
-    info = info or {},
+    config = config or require'teaman.config'.new(),
   }
   setmetatable(obj, terminal_mt)
   return obj
