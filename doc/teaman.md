@@ -4,6 +4,6 @@ README.md
 
 # Developer Documentation
 
-```{.include}
+```vimdoc {.include}
 doc/teaman_api.txt
 ```
