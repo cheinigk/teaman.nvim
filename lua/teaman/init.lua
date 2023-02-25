@@ -4,12 +4,15 @@ local M = {}
 local Terminals = {}
 
 ---@brief Add a terminal
----@param term Terminal @table
-function M.add(term)
+---@param config Config @config table
+---@param info table @custom info table
+function M.add(config)
   vim.validate({
-    term = {term, require'teaman.utils'.is_terminal, "Terminal table"},
+    config = {config, require'teaman.utils'.is_config, "Config|nil"},
   })
+  local term = require'teaman.terminal'.new(config)
   table.insert(Terminals, term)
+  return term
 end
 
 ---@brief remove a terminal
@@ -19,7 +22,7 @@ function M.remove(term)
     term = {term, require'teaman.utils'.is_terminal, "Terminal table"},
   })
   Terminals = vim.tbl_filter(
-    function(t) return t == term end,
+    function(t) return t ~= term end,
     Terminals
   )
 end
