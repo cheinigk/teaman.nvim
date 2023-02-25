@@ -14,7 +14,7 @@ local config_mt = {
     elseif default_config[key] then
       return default_config[key]
     else
-      error("Key \"" .. key .. "\" not found", vim.log.levels.ERROR)
+      error('Key "' .. key .. '" not found', vim.log.levels.ERROR)
     end
   end,
   -- Essentially making this table constant.
@@ -26,9 +26,9 @@ local config_mt = {
 local Config = {}
 
 function Config.new(overrides)
-  vim.validate({
-    overrides = {overrides, "table", true},
-  })
+  vim.validate {
+    overrides = { overrides, "table", true },
+  }
   local obj = overrides or {}
   setmetatable(obj, config_mt)
   return obj
