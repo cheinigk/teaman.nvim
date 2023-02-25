@@ -15,15 +15,14 @@ jobs:
         run: |
           curl -Lq https://github.com/numToStr/lemmy-help/releases/latest/download/lemmy-help-x86_64-unknown-linux-gnu.tar.gz | tar xz
           ./lemmy-help ./lua/teaman/*.lua > ./doc/teaman_api.txt
-      - uses: actions/checkout@v2
       - name: panvimdoc
-        uses: ./
+        uses: kdheepak/panvimdoc@main
         with:
           vimdoc: teaman
           pandoc: doc/teaman.md
           treesitter: true
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Auto generate docs"
+          commit_message: "Auto generate vimdocs"
           branch: ${{ github.head_ref }}
           file_pattern: doc/*.txt
