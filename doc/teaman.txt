@@ -1,121 +1,140 @@
-Config.new()                                                        *Config.new*
+*teaman.txt*           For NVIM v0.8.0           Last change: 2023 February 25
+
+==============================================================================
+Table of Contents                                   *teaman-table-of-contents*
+
+1. teaman.nvim                                            |teaman-teaman.nvim|
+  - Installation                             |teaman-teaman.nvim-installation|
+  - Configuration                           |teaman-teaman.nvim-configuration|
+  - Usage                                           |teaman-teaman.nvim-usage|
+  - Development                               |teaman-teaman.nvim-development|
+  - Similar, More Powerful Plugins|teaman-teaman.nvim-similar,-more-powerful-plugins|
+2. Developer Documentation                    |teaman-developer-documentation|
+
+==============================================================================
+1. teaman.nvim                                            *teaman-teaman.nvim*
+
+An opinionated simple terminal manager for neovim’s built-in terminal.
+Essentially just a wrapper around `termopen()`.
 
 
-Terminals                                                            *Terminals*
+INSTALLATION                                 *teaman-teaman.nvim-installation*
 
 
-M.add({config}, {info})                                                  *M.add*
-    @brief Add a terminal
+PACKER.NVIM ~
 
-    Parameters: ~
-        {config}  (Config)  @config table
-        {info}    (table)   @custom info table
-
-
-M.remove({term})                                                      *M.remove*
-    @brief remove a terminal
-
-    Parameters: ~
-        {term}  (Terminal)  table
+>lua
+    use{"cheinigk/teaman.nvim"}
+<
 
 
-M.list()                                                                *M.list*
-    @brief list all terminals
+CONFIGURATION                               *teaman-teaman.nvim-configuration*
 
-    Returns: ~
-        (Terminals)  of Terminal objects
+Create a global variable with the configuration table. Missing entries will be
+defaulted.
 
+>lua
+    -- Have a look at the following default table. Note, it is not necessary
+    -- to actually create this global variable, as non-existing entries will
+    -- be defaulted automatically.
+    vim.g.teaman = {
+    }
+<
 
-M.filter({predicate})                                                 *M.filter*
-    @brief filter terminals
+So to change the default shell command, the following configuration table needs
+to be defined.
 
-    Parameters: ~
-        {predicate}  (function)  Predicate function used to filter the terminals
-
-    Returns: ~
-        (Terminals)  of Terminal objects
-
-
-M.map({f})                                                               *M.map*
-    @brief apply a function for all terminals
-
-    Parameters: ~
-        {f}  (function)  Function acting on a terminal object
-
-    Returns: ~
-        (Terminals)  of Terminal objects
+>lua
+    vim.g.teaman = {
+      shell = {'/usr/bin/zsh'}, -- Use `zsh` instead of `$SHELL`.
+    }
+<
 
 
-Terminal                                                              *Terminal*
+USAGE                                               *teaman-teaman.nvim-usage*
+
+This plugin does not do anything by default. Hence, you have to tell it how you
+want to use it. To have a "global" terminal (per `nvim` instance), you can
+create the file `~/.config/nvim/after/plugin/teaman.lua` with the content
+
+>lua
+    -- Filter the terminal by the provided user info.
+    local function isglobal(term)
+      return term.info and term.info.type and term.info.type == "global"
+    end
+    
+    -- Create a new terminal with additional user info or return the
+    -- previously created terminal.
+    local function first_global_term()
+      local teaman = require'teaman'
+      local global_terms = teaman.list(isglobal)
+      if vim.tbl_isempty(global_terms) then
+        local term = Terminal:new(nil, {type = "global"})
+        local term = teaman.add(term)
+        return term
+      else
+        return global_terms[1]
+      end
+    end
+    
+    --
+    -- Setup keymaps
+    --
+    -- Toggle the terminal instance
+    vim.keymap.set({'n', 't'}, [[<C-\><C-\>]], function ()
+      first_global_term():toggle()
+    end, {})
+    -- Send text to the terminal
+    vim.keymap.set({'n','v'}, 'gX', function(m)
+      return first_global_term():send_motion(m)
+    end, {expr=true, desc="Send lines covered by motion to global terminal."})
+    vim.keymap.set("n", "gXX", "m`0gX$``",
+      {remap=true, desc="Send current line to global terminal."})
+    vim.keymap.set("n", "gX%", "m`gggXG``",
+      {remap=true, desc="Send current buffer to global terminal."})
+    vim.keymap.set("n", "gX<CR>", function ()
+      first_global_term():send_text('\n')
+    end, {desc="Send <CR> to global terminal."})
+    vim.keymap.set("n", "gXc", function ()
+      first_global_term():send_text('')
+    end, {desc="Send <ctrl-c> to global terminal."})
+<
 
 
-Terminal:create()                                              *Terminal:create*
-    @brief creates a new terminal without opening a window
+DEVELOPMENT                                   *teaman-teaman.nvim-development*
 
 
-Terminal:open()                                                  *Terminal:open*
-    @brief opens the terminal window and opens a new terminal if it does not already exist
+REQUIREMENTS ~
 
 
-Terminal:close()                                                *Terminal:close*
-    @brief close the terminal window (does not close the terminal)
+- `luacheck` to lint the sources
+- `stylua` to enforce a coding style
+- `lemmy-help` to generate the API `vimdocs` from `lua` files
+- `panvimdoc` to generate the user `vimdocs` from `markdown` files
+
+Have a look at the `Makefile` to see how tests, `luacheck`, and `stylua` is run
+and generation of docs is done.
 
 
-Terminal:toggle()                                              *Terminal:toggle*
-    @brief toggle the terminal window
+SIMILAR, MORE POWERFUL PLUGINS*teaman-teaman.nvim-similar,-more-powerful-plugins*
+
+Before writing my own terminal manager, I used the following two plugins.
 
 
-Terminal:quit()                                                  *Terminal:quit*
-    @brief quit the terminal session (quits the terminal session and deletes the buffer)
+- toggleterm.nvim <https://github.com/akinsho/toggleterm.nvim>
+- iron.nvim <https://github.com/hkupty/iron.nvim>
+
+Both are well designed and serve a need. I’d advice everyone to choose one of
+these, if you want a more convenient though-out terminal manager. The reason I
+turned away from both was twofold. First, I wanted one plugin instead of two.
+And second, I felt I didn’t use a lot of the offered features.
 
 
-Terminal:send_text({cmd})                                   *Terminal:send_text*
+==============================================================================
+2. Developer Documentation                    *teaman-developer-documentation*
 
-    Parameters: ~
-        {cmd}  (string)  @send text to terminal without newline
+See ./teaman_api.txt <./teaman_api.txt> for generated API documentation.
 
-
-Terminal:send_line({line})                                  *Terminal:send_line*
-
-    Parameters: ~
-        {line}  (string)  @send text to terminal with newline
-
-
-Terminal:send_motion({motion})                            *Terminal:send_motion*
-
-    Parameters: ~
-        {motion}  (string)  @type of vim motion
-
-
-Terminal.new({config})                                            *Terminal.new*
-    @brief constructs a new terminal object
-
-    Parameters: ~
-        {config}  (table)  @config table
-
-    Returns: ~
-        (Terminal)
-
-
-utils.range()                                                      *utils.range*
-
-
-utils.covered_lines()                                      *utils.covered_lines*
-
-
-utils.with_restore_current_win()                *utils.with_restore_current_win*
-
-
-utils.with_restore_current_buf()                *utils.with_restore_current_buf*
-
-
-utils.is_terminal()                                          *utils.is_terminal*
-
-
-utils.is_config({arg})                                         *utils.is_config*
-
-    Parameters: ~
-        {arg}  (table|nil)  @optional config table
-
+Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>
 
 vim:tw=78:ts=8:noet:ft=help:norl:
