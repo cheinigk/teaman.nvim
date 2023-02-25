@@ -80,6 +80,17 @@ vim.keymap.set("n", "gXc", function ()
 end, {desc="Send <ctrl-c> to global terminal."})
 ```
 
+## Development
+
+### Requirements
+
+- `luacheck` to lint the sources
+- `stylua` to enforce a coding style
+- `lemmy-help` to generate the API `vimdocs` from `lua` files
+- `panvimdoc` to generate the user `vimdocs` from `markdown` files 
+
+Have a look at the `Makefile` to see how tests, `luacheck`, and `stylua` is run and generation of docs is done.
+
 ## Similar, More Powerful Plugins
 
 Before writing my own terminal manager, I used the following two plugins.
