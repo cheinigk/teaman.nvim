@@ -13,10 +13,10 @@ jobs:
       - uses: actions/checkout@v3
       - run: date +%F > todays-date
       - name: Restore cache for today's nightly.
-        uses: actions/cache@v3
+        uses: actions/cache@v2
         with:
           path: _neovim
-          key: ${{ hashFiles('todays-date') }}
+          key: ${{ runner.os }}-x64-${{ hashFiles('todays-date') }}
       - name: Prepare nvim.
         run: |
           test -d _neovim || {
