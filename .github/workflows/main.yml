@@ -11,12 +11,21 @@ jobs:
     name: install neovim and run tests
     steps:
       - uses: actions/checkout@v3
+      - name: Get Date
+        id: get-date
+        run: |
+          echo "date=$(/bin/date -u "+%Y%m%d")" >> $GITHUB_OUTPUT
+        shell: bash
+      - uses: actions/cache@v3
+        with:
+          path: _neovim
+          key: ${{ runner.os }}-x64-${{ steps.get-date.outputs.date }}
       - name: Install neovim.
         run: |
           test -d _neovim || {
             mkdir -p _neovim
             curl -sL "https://github.com/neovim/neovim/releases/download/nvim-linux64.tar.gz" | tar xzf - --strip-components=1 -C "${PWD}/_neovim"
-        }
+          }
       - name: Install test dependencies.
         run: |
           git clone https://github.com/nvim-lua/plenary.nvim
