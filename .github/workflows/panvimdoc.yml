@@ -29,8 +29,10 @@ jobs:
           vimdoc: teaman
           pandoc: doc/teaman.md
           treesitter: true
+      - name: generate-helptags
+        run: vim "+helptags ./doc | q"
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Auto generate vimdocs"
           branch: ${{ github.head_ref }}
-          file_pattern: doc/teaman.txt
+          file_pattern: doc/teaman.txt doc/tags
