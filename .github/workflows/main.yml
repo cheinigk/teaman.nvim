@@ -1,4 +1,4 @@
-name: panvimdoc
+name: run tests and create vimdocs
 
 on:
   push:
