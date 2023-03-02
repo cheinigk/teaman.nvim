@@ -16,7 +16,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: _neovim
-          key: ${{ runner.os }}-${{ hashFiles('todays-date') }}
+          key: ${{ hashFiles('todays-date') }}
       - name: Prepare nvim.
         run: |
           test -d _neovim || {
