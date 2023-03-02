@@ -11,13 +11,15 @@ jobs:
     name: install neovim and run tests
     steps:
       - uses: actions/checkout@v3
-      - run: date +%F > todays-date
-      - name: Restore cache for today's nightly.
-        id: cache-neovim
-        uses: actions/cache@v3
+      - name: Get Date
+        id: get-date
+        run: |
+          echo "date=$(/bin/date -u "+%Y%m%d")" >> $GITHUB_OUTPUT
+        shell: bash
+      - uses: actions/cache@v3
         with:
           path: _neovim
-          key: ${{ runner.os }}-x64-${{ hashFiles('todays-date') }}
+          key: ${{ runner.os }}-x64-${{ steps.get-date.outputs.date }}
       - name: Install neovim.
         run: |
           test -d _neovim || {
