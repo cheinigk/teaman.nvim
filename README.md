@@ -39,18 +39,23 @@ you can create the file `~/.config/nvim/after/plugin/teaman.lua` with the conten
 
 ```lua
 -- Filter the terminal by the provided user info.
-local function isglobal(term)
-  return term.info and term.info.type and term.info.type == "global"
+local function is_global_term(term)
+  local has_info = term.config ~= nil and term.config.info ~= nil
+  if not has_info then
+    return false
+  end
+
+  return term.config.info.type ~= nil and term.config.info.type == "global"
 end
 
 -- Create a new terminal with additional user info or return the
 -- previously created terminal.
 local function first_global_term()
-  local teaman = require'teaman'
-  local global_terms = teaman.list(isglobal)
+  local terminal_manager = require'teaman'
+  local global_terms = terminal_manager.list(is_global_term)
   if vim.tbl_isempty(global_terms) then
-    local term = Terminal:new(nil, {type = "global"})
-    local term = teaman.add(term)
+    local term_config = require'teaman.config'.new{info = {type = 'global'}}
+    local term = terminal_manager.add(term_config)
     return term
   else
     return global_terms[1]
@@ -61,21 +66,21 @@ end
 -- Setup keymaps
 --
 -- Toggle the terminal instance
-vim.keymap.set({'n', 't'}, [[<C-\><C-\>]], function ()
+vim.keymap.set({'n', 't'}, "<leader>tt", function ()
   first_global_term():toggle()
-end, {})
+end, {desc = "toggle global terminal window"})
 -- Send text to the terminal
-vim.keymap.set({'n','v'}, 'gX', function(m)
+vim.keymap.set({'n','v'}, '<leader>tx', function(m)
   return first_global_term():send_motion(m)
 end, {expr=true, desc="Send lines covered by motion to global terminal."})
-vim.keymap.set("n", "gXX", "m`0gX$``",
+vim.keymap.set("n", "<leader>txx", "m`0<leader>tx$``",
   {remap=true, desc="Send current line to global terminal."})
-vim.keymap.set("n", "gX%", "m`gggXG``",
+vim.keymap.set("n", "<leader>tx%", "m`gg<leader>txG``",
   {remap=true, desc="Send current buffer to global terminal."})
-vim.keymap.set("n", "gX<CR>", function ()
+vim.keymap.set("n", "<leader>tx<CR>", function ()
   first_global_term():send_text('\n')
 end, {desc="Send <CR> to global terminal."})
-vim.keymap.set("n", "gXc", function ()
+vim.keymap.set("n", "<leader>txc", function ()
   first_global_term():send_text('')
 end, {desc="Send <ctrl-c> to global terminal."})
 ```
