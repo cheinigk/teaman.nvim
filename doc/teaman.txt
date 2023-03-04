@@ -8,7 +8,7 @@ Table of Contents                                   *teaman-table-of-contents*
   - Configuration                           |teaman-teaman.nvim-configuration|
   - Usage                                           |teaman-teaman.nvim-usage|
   - Development                               |teaman-teaman.nvim-development|
-  - Similar, More Powerful Plugins|teaman-teaman.nvim-similar,-more-powerful-plugins|
+  - Similar (More Powerful) Plugins|teaman-teaman.nvim-similar-(more-powerful)-plugins|
 2. Developer Documentation                    |teaman-developer-documentation|
 
 ==============================================================================
@@ -117,11 +117,12 @@ REQUIREMENTS ~
 - `lemmy-help` to generate the API `vimdocs` from `lua` files
 - `panvimdoc` to generate the user `vimdocs` from `markdown` files
 
-Have a look at the `Makefile` to see how tests, `luacheck`, and `stylua` is run
-and generation of docs is done.
+Have a look at the `Makefile` to see how tests using `luassert` and `busted`
+from `plenary.nvim`, linting with `luacheck`, and formatting with `stylua` are
+run and generation of docs is done.
 
 
-SIMILAR, MORE POWERFUL PLUGINS*teaman-teaman.nvim-similar,-more-powerful-plugins*
+SIMILAR (MORE POWERFUL) PLUGINS*teaman-teaman.nvim-similar-(more-powerful)-plugins*
 
 Before writing my own terminal manager, I used the following two plugins.
 
