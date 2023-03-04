@@ -12,16 +12,13 @@ help:
 	@echo "    doc     create the vim documentation"
 
 format:
-	@stylua --config-path=.stylua.toml lua/teaman
+	@stylua --config-path=.stylua.toml lua/teaman/ tests/
 
 lint:
-	@luacheck lua/teaman
+	@luacheck --config .luacheckrc lua/teaman/ tests/
 
 test:
-	nvim --headless --noplugin -u tests/minimal.vim -c "PlenaryBustedDirectory tests/plenary/ {minimal_init = 'tests/minimal.vim'}"
-
-doc:
-	@lemmy-help ./lua/teaman/*.lua > ./doc/teaman_api.txt
+	nvim --headless --noplugin -u tests/minimal.vim -c "PlenaryBustedDirectory tests/ {minimal_init = 'tests/minimal.vim'}"
 
 love:
 	@echo "not war"

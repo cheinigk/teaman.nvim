@@ -1,6 +1,7 @@
 # `teaman.nvim`
 
-An opinionated simple terminal manager for neovim's built-in terminal. Essentially just a wrapper around `termopen()`.
+An opinionated simple terminal manager for neovim's built-in terminal.
+Essentially just a wrapper around `termopen()`.
 
 ## Installation
 
@@ -12,8 +13,8 @@ use{"cheinigk/teaman.nvim"}
 
 ## Configuration
 
-Create a global variable with the configuration table. Missing entries
-will be defaulted.
+Create a global variable with the configuration table. Missing entries will be
+defaulted.
 
 ```lua
 -- Have a look at the following default table. Note, it is not necessary
@@ -23,7 +24,8 @@ vim.g.teaman = {
 }
 ```
 
-So to change the default shell command, the following configuration table needs to be defined.
+So to change the default shell command, the following configuration table needs
+to be defined.
 
 ```lua
 vim.g.teaman = {
@@ -33,9 +35,9 @@ vim.g.teaman = {
 
 ## Usage
 
-This plugin does not do anything by default. Hence, you have to tell it
-how you want to use it. To have a "global" terminal (per `nvim` instance),
-you can create the file `~/.config/nvim/after/plugin/teaman.lua` with the content
+This plugin does not do anything by default. Hence, you have to tell it how you
+want to use it. To have a "global" terminal (per `nvim` instance), you can
+create the file `~/.config/nvim/after/plugin/teaman.lua` with the content
 
 ```lua
 -- Filter the terminal by the provided user info.
@@ -94,17 +96,18 @@ end, {desc="Send <ctrl-c> to global terminal."})
 - `lemmy-help` to generate the API `vimdocs` from `lua` files
 - `panvimdoc` to generate the user `vimdocs` from `markdown` files 
 
-Have a look at the `Makefile` to see how tests, `luacheck`, and `stylua` is run and generation of docs is done.
+Have a look at the `Makefile` to see how tests using `luassert` and `busted`
+from `plenary.nvim`, linting with `luacheck`, and formatting with `stylua` are
+run and generation of docs is done.
 
-## Similar, More Powerful Plugins
+## Similar (More Powerful) Plugins
 
 Before writing my own terminal manager, I used the following two plugins.
 
 - [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
 - [iron.nvim](https://github.com/hkupty/iron.nvim)
 
-Both are well designed and serve a need. I'd advice everyone to choose one
-of these, if you want a more convenient though-out terminal manager. The
-reason I turned away from both was twofold. First, I wanted one plugin
-instead of two. And second, I felt I didn't use a lot of the offered
-features.
+Both are well designed and serve a need. I'd advice everyone to choose one of
+these, if you want a more convenient though-out terminal manager. The reason
+I turned away from both was twofold. First, I wanted one plugin instead of two.
+And second, I felt I didn't use a lot of the offered features.
