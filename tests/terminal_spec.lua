@@ -11,9 +11,6 @@ local function tbl_difference(t1, t2)
 end
 
 describe("Terminal wrapper:", function()
-  describe("always true:", function()
-    it("is always true", function() eq(true, true) end)
-  end)
   describe("create a terminal object with default config:", function()
     vim.g.teaman = {
       shell = vim.fn.split(vim.o.shell),
