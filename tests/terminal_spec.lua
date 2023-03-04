@@ -22,7 +22,7 @@ describe("Terminal wrapper:", function()
     local terminal = require("teaman.terminal").new()
     it(
       "converts to string",
-      function() eq(tostring(terminal), [[Terminal{shell="bash", bufnr=-1, winnr=-1, chanid=-1}]]) end
+      function() eq(tostring(terminal), [[Terminal{shell="]] .. vim.o.shell .. [[", bufnr=-1, winnr=-1, chanid=-1}]]) end
     )
     describe(
       "call create()",
