@@ -23,8 +23,12 @@ local config_mt = {
   end,
 }
 
+---@class Config
 local Config = {}
 
+---@brief constructs a new terminal config which can be handy to pass to the terminal constructor.
+---@param overrides table|nil @optional table to override the default config.
+---@return Config
 function Config.new(overrides)
   vim.validate {
     overrides = { overrides, "table", true },
