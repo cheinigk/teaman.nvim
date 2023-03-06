@@ -1,11 +1,14 @@
+---@mod teaman
+
 ---@class teaman
 local teaman = {}
 
----@class Terminals @contains Terminal objects
+---@class Terminals Essentially just a list of Terminal objects
 local Terminals = {}
 
 ---@brief Add a terminal
----@param config Config @config table
+---@param config Config Config table
+---@usage `require'teaman'.add(require'teaman.config'.new())`
 function teaman.add(config)
   vim.validate {
     config = { config, require("teaman.utils").is_config, "Config|nil" },

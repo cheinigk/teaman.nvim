@@ -1,3 +1,5 @@
+---@mod teaman.terminal
+
 ---@class Terminal
 local Terminal = {
   bufnr = nil,

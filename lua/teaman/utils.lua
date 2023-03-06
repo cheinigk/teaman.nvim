@@ -1,3 +1,5 @@
+---@mod teaman.utils
+
 local utils = {}
 
 local function is_visual(motion) return string.match(motion or "", "[vV]") end

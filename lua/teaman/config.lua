@@ -1,3 +1,5 @@
+---@mod teaman.config
+
 local default_config = {
   shell = vim.fn.split(vim.o.shell),
   info = {},
