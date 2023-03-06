@@ -87,19 +87,6 @@ vim.keymap.set("n", "<leader>txc", function ()
 end, {desc="Send <ctrl-c> to global terminal."})
 ```
 
-## Development
-
-### Requirements
-
-- `luacheck` to lint the sources
-- `stylua` to enforce a coding style
-- `lemmy-help` to generate the API `vimdocs` from `lua` files
-- `panvimdoc` to generate the user `vimdocs` from `markdown` files 
-
-Have a look at the `Makefile` to see how tests using `luassert` and `busted`
-from `plenary.nvim`, linting with `luacheck`, and formatting with `stylua` are
-run and generation of docs is done.
-
 ## Similar (More Powerful) Plugins
 
 Before writing my own terminal manager, I used the following two plugins.
@@ -107,7 +94,23 @@ Before writing my own terminal manager, I used the following two plugins.
 - [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
 - [iron.nvim](https://github.com/hkupty/iron.nvim)
 
-Both are well designed and serve a need. I'd advice everyone to choose one of
+Both are well-designed and serve a need. I'd advise everyone to choose one of
 these, if you want a more convenient though-out terminal manager. The reason
 I turned away from both was twofold. First, I wanted one plugin instead of two.
-And second, I felt I didn't use a lot of the offered features.
+Second, I felt I didn't use a lot of the offered features.
+
+## Developer Documentation
+
+### Requirements
+
+- `luacheck` to lint the sources
+- `stylua` to enforce a coding style
+- [`lemmy-help`](https://github.com/numToStr/lemmy-help) to generate the API `vimdocs` from `lua` files
+- [`panvimdoc`](https://github.com/kdheepak/panvimdoc) to generate the user `vimdocs` from `markdown` files 
+- [`plenary.nvim`](https://github.com/nvim-lua/plenary.nvim) to write and execute tests.
+
+Have a look at the [`Makefile`](./Makefile) to see how tests using `luassert` and `busted`
+from `plenary.nvim`, linting with `luacheck`, and formatting with `stylua` are
+run. The generation of docs is done via a github action (c.f.
+[`.github/workflows/main.yml`](./.github/workflows/main.yml)).
+

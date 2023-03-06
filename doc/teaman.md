@@ -2,7 +2,7 @@
 README.md
 ```
 
-# Developer Documentation
+### API
 
 ```{.include}
 doc/teaman_api.md
