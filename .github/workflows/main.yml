@@ -44,6 +44,21 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v2
+      - name: Get Date
+        id: get-date
+        run: |
+          echo "date=$(/bin/date -u "+%Y%m%d")" >> $GITHUB_OUTPUT
+        shell: bash
+      - uses: actions/cache@v3
+        with:
+          path: _neovim
+          key: neovim-${{ runner.os }}-x64-${{ steps.get-date.outputs.date }}
+      - name: Install neovim.
+        run: |
+          test -d _neovim || {
+            mkdir -p _neovim
+            curl -sL "https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz" | tar xzf - --strip-components=1 -C "${PWD}/_neovim"
+          }
       - name: panvimdoc
         uses: kdheepak/panvimdoc@main
         with:
@@ -53,7 +68,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: ./lemmy-help
-          key: ${{ runner.os }}-x64-${{ steps.get-date.outputs.date }}
+          key: lemmy-help-${{ runner.os }}-x64-${{ steps.get-date.outputs.date }}
       - name: install lemmy-help
         run: |
           test -x ./lemmy-help || {
