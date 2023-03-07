@@ -87,7 +87,7 @@ jobs:
         run: |
           export PATH="${PWD}/_neovim/bin:${PATH}"
           export VIM="${PWD}/_neovim/share/nvim/runtime"
-          nvim "+helptags ./doc | q"
+          nvim --cmd 'helptags ./doc | q'
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Auto generate vimdocs"
