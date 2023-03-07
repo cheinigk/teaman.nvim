@@ -1,269 +1,153 @@
-*teaman.txt*             For NVIM v0.8.0            Last change: 2023 March 04
-
 ==============================================================================
-Table of Contents                                   *teaman-table-of-contents*
+                                                                 *teaman.config*
 
-1. teaman.nvim                                            |teaman-teaman.nvim|
-  - Installation                             |teaman-teaman.nvim-installation|
-  - Configuration                           |teaman-teaman.nvim-configuration|
-  - Usage                                           |teaman-teaman.nvim-usage|
-  - Development                               |teaman-teaman.nvim-development|
-  - Similar (More Powerful) Plugins|teaman-teaman.nvim-similar-(more-powerful)-plugins|
-2. Developer Documentation                    |teaman-developer-documentation|
-
-==============================================================================
-1. teaman.nvim                                            *teaman-teaman.nvim*
-
-An opinionated simple terminal manager for neovim’s built-in terminal.
-Essentially just a wrapper around `termopen()`.
+Config                                                                  *Config*
 
 
-INSTALLATION                                 *teaman-teaman.nvim-installation*
+Config.new({overrides})                                             *Config.new*
+    @brief constructs a new terminal config which can be handy to pass to the terminal constructor.
 
+    Parameters: ~
+        {overrides}  (table|nil)  @optional table to override the default config.
 
-PACKER.NVIM ~
-
->lua
-    use{"cheinigk/teaman.nvim"}
-<
-
-
-CONFIGURATION                               *teaman-teaman.nvim-configuration*
-
-Create a global variable with the configuration table. Missing entries will be
-defaulted.
-
->lua
-    -- Have a look at the following default table. Note, it is not necessary
-    -- to actually create this global variable, as non-existing entries will
-    -- be defaulted automatically.
-    vim.g.teaman = {
-    }
-<
-
-So to change the default shell command, the following configuration table needs
-to be defined.
-
->lua
-    vim.g.teaman = {
-      shell = {'/usr/bin/zsh'}, -- Use `zsh` instead of `$SHELL`.
-    }
-<
-
-
-USAGE                                               *teaman-teaman.nvim-usage*
-
-This plugin does not do anything by default. Hence, you have to tell it how you
-want to use it. To have a "global" terminal (per `nvim` instance), you can
-create the file `~/.config/nvim/after/plugin/teaman.lua` with the content
-
->lua
-    -- Filter the terminal by the provided user info.
-    local function is_global_term(term)
-      local has_info = term.config ~= nil and term.config.info ~= nil
-      if not has_info then
-        return false
-      end
-    
-      return term.config.info.type ~= nil and term.config.info.type == "global"
-    end
-    
-    -- Create a new terminal with additional user info or return the
-    -- previously created terminal.
-    local function first_global_term()
-      local terminal_manager = require'teaman'
-      local global_terms = terminal_manager.list(is_global_term)
-      if vim.tbl_isempty(global_terms) then
-        local term_config = require'teaman.config'.new{info = {type = 'global'}}
-        local term = terminal_manager.add(term_config)
-        return term
-      else
-        return global_terms[1]
-      end
-    end
-    
-    --
-    -- Setup keymaps
-    --
-    -- Toggle the terminal instance
-    vim.keymap.set({'n', 't'}, "<leader>tt", function ()
-      first_global_term():toggle()
-    end, {desc = "toggle global terminal window"})
-    -- Send text to the terminal
-    vim.keymap.set({'n','v'}, '<leader>tx', function(m)
-      return first_global_term():send_motion(m)
-    end, {expr=true, desc="Send lines covered by motion to global terminal."})
-    vim.keymap.set("n", "<leader>txx", "m`0<leader>tx$``",
-      {remap=true, desc="Send current line to global terminal."})
-    vim.keymap.set("n", "<leader>tx%", "m`gg<leader>txG``",
-      {remap=true, desc="Send current buffer to global terminal."})
-    vim.keymap.set("n", "<leader>tx<CR>", function ()
-      first_global_term():send_text('\n')
-    end, {desc="Send <CR> to global terminal."})
-    vim.keymap.set("n", "<leader>txc", function ()
-      first_global_term():send_text('')
-    end, {desc="Send <ctrl-c> to global terminal."})
-<
-
-
-DEVELOPMENT                                   *teaman-teaman.nvim-development*
-
-
-REQUIREMENTS ~
-
-
-- `luacheck` to lint the sources
-- `stylua` to enforce a coding style
-- `lemmy-help` to generate the API `vimdocs` from `lua` files
-- `panvimdoc` to generate the user `vimdocs` from `markdown` files
-
-Have a look at the `Makefile` to see how tests using `luassert` and `busted`
-from `plenary.nvim`, linting with `luacheck`, and formatting with `stylua` are
-run and generation of docs is done.
-
-
-SIMILAR (MORE POWERFUL) PLUGINS*teaman-teaman.nvim-similar-(more-powerful)-plugins*
-
-Before writing my own terminal manager, I used the following two plugins.
-
-
-- toggleterm.nvim <https://github.com/akinsho/toggleterm.nvim>
-- iron.nvim <https://github.com/hkupty/iron.nvim>
-
-Both are well designed and serve a need. I’d advice everyone to choose one of
-these, if you want a more convenient though-out terminal manager. The reason I
-turned away from both was twofold. First, I wanted one plugin instead of two.
-And second, I felt I didn’t use a lot of the offered features.
+    Returns: ~
+        (Config)
 
 
 ==============================================================================
-2. Developer Documentation                    *teaman-developer-documentation*
+                                                                   *teaman.init*
 
->vimdoc
-    
-    Config.new()                                                        *Config.new*
-    
-    
-    Terminals                                                            *Terminals*
-    
-    
-    M.add({config}, {info})                                                  *M.add*
-        @brief Add a terminal
-    
-        Parameters: ~
-            {config}  (Config)  @config table
-            {info}    (table)   @custom info table
-    
-    
-    M.remove({term})                                                      *M.remove*
-        @brief remove a terminal
-    
-        Parameters: ~
-            {term}  (Terminal)  table
-    
-    
-    M.list()                                                                *M.list*
-        @brief list all terminals
-    
-        Returns: ~
-            (Terminals)  of Terminal objects
-    
-    
-    M.filter({predicate})                                                 *M.filter*
-        @brief filter terminals
-    
-        Parameters: ~
-            {predicate}  (function)  Predicate function used to filter the terminals
-    
-        Returns: ~
-            (Terminals)  of Terminal objects
-    
-    
-    M.map({f})                                                               *M.map*
-        @brief apply a function for all terminals
-    
-        Parameters: ~
-            {f}  (function)  Function acting on a terminal object
-    
-        Returns: ~
-            (Terminals)  of Terminal objects
-    
-    
-    Terminal                                                              *Terminal*
-    
-    
-    Terminal:create()                                              *Terminal:create*
-        @brief creates a new terminal without opening a window
-    
-    
-    Terminal:open()                                                  *Terminal:open*
-        @brief opens the terminal window and opens a new terminal if it does not already exist
-    
-    
-    Terminal:close()                                                *Terminal:close*
-        @brief close the terminal window (does not close the terminal)
-    
-    
-    Terminal:toggle()                                              *Terminal:toggle*
-        @brief toggle the terminal window
-    
-    
-    Terminal:quit()                                                  *Terminal:quit*
-        @brief quit the terminal session (quits the terminal session and deletes the buffer)
-    
-    
-    Terminal:send_text({cmd})                                   *Terminal:send_text*
-    
-        Parameters: ~
-            {cmd}  (string)  @send text to terminal without newline
-    
-    
-    Terminal:send_line({line})                                  *Terminal:send_line*
-    
-        Parameters: ~
-            {line}  (string)  @send text to terminal with newline
-    
-    
-    Terminal:send_motion({motion})                            *Terminal:send_motion*
-    
-        Parameters: ~
-            {motion}  (string)  @type of vim motion
-    
-    
-    Terminal.new({config})                                            *Terminal.new*
-        @brief constructs a new terminal object
-    
-        Parameters: ~
-            {config}  (table)  @config table
-    
-        Returns: ~
-            (Terminal)
-    
-    
-    utils.range()                                                      *utils.range*
-    
-    
-    utils.covered_lines()                                      *utils.covered_lines*
-    
-    
-    utils.with_restore_current_win()                *utils.with_restore_current_win*
-    
-    
-    utils.with_restore_current_buf()                *utils.with_restore_current_buf*
-    
-    
-    utils.is_terminal()                                          *utils.is_terminal*
-    
-    
-    utils.is_config({arg})                                         *utils.is_config*
-    
-        Parameters: ~
-            {arg}  (table|nil)  @optional config table
-    
-    
-    vim:tw=78:ts=8:noet:ft=help:norl:
+teaman                                                                  *teaman*
+
+
+Terminals                                                            *Terminals*
+
+
+teaman.add({config})                                                *teaman.add*
+    @brief Add a terminal
+
+    Parameters: ~
+        {config}  (Config)  Config table
+
+    Usage: ~
+>lua
+        require'teaman'.add(require'teaman.config'.new())
 <
 
-Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>
 
-vim:tw=78:ts=8:noet:ft=help:norl:
+teaman.remove({term})                                            *teaman.remove*
+    @brief remove a terminal
+
+    Parameters: ~
+        {term}  (Terminal)  table
+
+
+teaman.list()                                                      *teaman.list*
+    @brief list all terminals
+
+    Returns: ~
+        (Terminals)  of Terminal objects
+
+
+teaman.filter({predicate})                                       *teaman.filter*
+    @brief filter terminals
+
+    Parameters: ~
+        {predicate}  (function)  Predicate function used to filter the terminals
+
+    Returns: ~
+        (Terminals)  of Terminal objects
+
+
+teaman.map({f})                                                     *teaman.map*
+    @brief apply a function for all terminals
+
+    Parameters: ~
+        {f}  (function)  Function acting on a terminal object
+
+    Returns: ~
+        (Terminals)  of Terminal objects
+
+
+==============================================================================
+                                                               *teaman.terminal*
+
+Terminal                                                              *Terminal*
+
+
+Terminal:create()                                              *Terminal:create*
+    @brief creates a new terminal without opening a window
+
+
+Terminal:open()                                                  *Terminal:open*
+    @brief opens the terminal window and opens a new terminal if it does not already exist
+
+
+Terminal:close()                                                *Terminal:close*
+    @brief close the terminal window (does not close the terminal)
+
+
+Terminal:toggle()                                              *Terminal:toggle*
+    @brief toggle the terminal window
+
+
+Terminal:quit()                                                  *Terminal:quit*
+    @brief quit the terminal session (quits the terminal session and deletes the buffer)
+
+
+Terminal:send_text({cmd})                                   *Terminal:send_text*
+
+    Parameters: ~
+        {cmd}  (string)  @send text to terminal without newline
+
+
+Terminal:send_line({line})                                  *Terminal:send_line*
+
+    Parameters: ~
+        {line}  (string)  @send text to terminal with newline
+
+
+Terminal:send_motion({motion})                            *Terminal:send_motion*
+
+    Parameters: ~
+        {motion}  (string)  @type of vim motion
+
+
+Terminal.new({config})                                            *Terminal.new*
+    @brief constructs a new terminal object
+
+    Parameters: ~
+        {config}  (table)  @config table
+
+    Returns: ~
+        (Terminal)
+
+
+==============================================================================
+                                                                  *teaman.utils*
+
+utils.range()                                                      *utils.range*
+
+
+utils.covered_lines()                                      *utils.covered_lines*
+
+
+utils.with_restore_current_win()                *utils.with_restore_current_win*
+
+
+utils.with_restore_current_buf()                *utils.with_restore_current_buf*
+
+
+utils.is_terminal()                                          *utils.is_terminal*
+
+
+utils.is_config({arg})                                         *utils.is_config*
+
+    Parameters: ~
+        {arg}  (table|nil)  @optional config table
+
+
+Generated by lemmy-help <https://github.com/numToStr/lemmy-help> and 
+panvimdoc <https://github.com/kdheepak/panvimdoc>
+
+
