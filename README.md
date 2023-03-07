@@ -87,21 +87,34 @@ vim.keymap.set("n", "<leader>txc", function ()
 end, {desc="Send <ctrl-c> to global terminal."})
 ```
 
-## Similar (More Powerful) Plugins
+## Similar Plugins
 
-Before writing my own terminal manager, I used the following two plugins.
+Before writing my own terminal manager, I used the following two plugins:
 
 - [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
 - [iron.nvim](https://github.com/hkupty/iron.nvim)
 
-Both are well-designed and serve a need. I'd advise everyone to choose one of
-these, if you want a more convenient though-out terminal manager. The reason
-I turned away from both was twofold. First, I wanted one plugin instead of two.
-Second, I felt I didn't use a lot of the offered features.
+Both are way more powerful, well-designed, and serve a particular need. I'd
+advise everyone to choose one of these, if you want a more convenient
+thought-out terminal manager. The reason I turned away from both was twofold.
+First, I wanted one plugin instead of two to handle my terminal usage within
+neovim. Second, I felt I didn't use a lot of the offered features from either
+of the plugins.
 
-## Developer Documentation
+# Acknowledgement
 
-### Requirements
+Obviously, I couldn't write this plugin without ideas taken from others. The
+plugin's structure follows [mfussenegger's blog
+post](https://zignar.net/2022/11/06/structuring-neovim-lua-plugins/). Having
+a terminal, which is shared within neovim instance, and, which can be toggled for
+ease of interaction, stems from
+`[toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)`. The idea to
+send commands to a terminal and setting up different Shells/REPLs I got from
+`[iron.nvim](https://github.com/hkupty/iron.nvim)`.
+
+# Developer Documentation
+
+## Requirements
 
 - `luacheck` to lint the sources
 - `stylua` to enforce a coding style
