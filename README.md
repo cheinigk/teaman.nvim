@@ -108,9 +108,9 @@ plugin's structure follows [mfussenegger's blog
 post](https://zignar.net/2022/11/06/structuring-neovim-lua-plugins/). Having
 a terminal, which is shared within neovim instance, and, which can be toggled for
 ease of interaction, stems from
-`[toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)`. The idea to
+[`toggleterm.nvim`](https://github.com/akinsho/toggleterm.nvim). The idea to
 send commands to a terminal and setting up different Shells/REPLs I got from
-`[iron.nvim](https://github.com/hkupty/iron.nvim)`.
+[`iron.nvim`](https://github.com/hkupty/iron.nvim).
 
 # Developer Documentation
 
