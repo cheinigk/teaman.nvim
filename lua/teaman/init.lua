@@ -1,4 +1,4 @@
----@mod teaman
+---@mod teaman.init
 
 ---@class teaman
 local teaman = {}
