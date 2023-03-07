@@ -1,4 +1,4 @@
-# `teaman.nvim`
+# User Documentation
 
 An opinionated simple terminal manager for neovim's built-in terminal.
 Essentially just a wrapper around `termopen()`.
