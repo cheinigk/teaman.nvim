@@ -12,11 +12,14 @@ Terminal:send_text	teaman.txt	/*Terminal:send_text*
 Terminal:toggle	teaman.txt	/*Terminal:toggle*
 Terminals	teaman.txt	/*Terminals*
 teaman	teaman.txt	/*teaman*
+teaman-acknowledgement	teaman.txt	/*teaman-acknowledgement*
+teaman-developer-documentation	teaman.txt	/*teaman-developer-documentation*
+teaman-developer-documentation-requirements	teaman.txt	/*teaman-developer-documentation-requirements*
 teaman-table-of-contents	teaman.txt	/*teaman-table-of-contents*
 teaman-user-documentation	teaman.txt	/*teaman-user-documentation*
 teaman-user-documentation-configuration	teaman.txt	/*teaman-user-documentation-configuration*
-teaman-user-documentation-developer-documentation	teaman.txt	/*teaman-user-documentation-developer-documentation*
 teaman-user-documentation-installation	teaman.txt	/*teaman-user-documentation-installation*
+teaman-user-documentation-similar-plugins	teaman.txt	/*teaman-user-documentation-similar-plugins*
 teaman-user-documentation-usage	teaman.txt	/*teaman-user-documentation-usage*
 teaman.add	teaman.txt	/*teaman.add*
 teaman.config	teaman.txt	/*teaman.config*

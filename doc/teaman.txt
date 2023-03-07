@@ -7,8 +7,10 @@ Table of Contents                                   *teaman-table-of-contents*
   - Installation                      |teaman-user-documentation-installation|
   - Configuration                    |teaman-user-documentation-configuration|
   - Usage                                    |teaman-user-documentation-usage|
-  - Similar (More Powerful) Plugins|teaman-user-documentation-similar-(more-powerful)-plugins|
-  - Developer Documentation|teaman-user-documentation-developer-documentation|
+  - Similar Plugins                |teaman-user-documentation-similar-plugins|
+2. Acknowledgement                                    |teaman-acknowledgement|
+3. Developer Documentation                    |teaman-developer-documentation|
+  - Requirements                 |teaman-developer-documentation-requirements|
 
 ==============================================================================
 1. User Documentation                              *teaman-user-documentation*
@@ -105,24 +107,40 @@ create the file `~/.config/nvim/after/plugin/teaman.lua` with the content
 <
 
 
-SIMILAR (MORE POWERFUL) PLUGINS*teaman-user-documentation-similar-(more-powerful)-plugins*
+SIMILAR PLUGINS                    *teaman-user-documentation-similar-plugins*
 
-Before writing my own terminal manager, I used the following two plugins.
+Before writing my own terminal manager, I used the following two plugins:
 
 
 - toggleterm.nvim <https://github.com/akinsho/toggleterm.nvim>
 - iron.nvim <https://github.com/hkupty/iron.nvim>
 
-Both are well-designed and serve a need. I’d advise everyone to choose one of
-these, if you want a more convenient though-out terminal manager. The reason I
-turned away from both was twofold. First, I wanted one plugin instead of two.
-Second, I felt I didn’t use a lot of the offered features.
+Both are way more powerful, well-designed, and serve a particular need. I’d
+advise everyone to choose one of these, if you want a more convenient
+thought-out terminal manager. The reason I turned away from both was twofold.
+First, I wanted one plugin instead of two to handle my terminal usage within
+neovim. Second, I felt I didn’t use a lot of the offered features from either
+of the plugins.
 
 
-DEVELOPER DOCUMENTATION    *teaman-user-documentation-developer-documentation*
+==============================================================================
+2. Acknowledgement                                    *teaman-acknowledgement*
+
+Obviously, I couldn’t write this plugin without ideas taken from others. The
+plugin’s structure follows mfussenegger’s blog post
+<https://zignar.net/2022/11/06/structuring-neovim-lua-plugins/>. Having a
+terminal, which is shared within neovim instance, and, which can be toggled for
+ease of interaction, stems from
+`[toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)`. The idea to
+send commands to a terminal and setting up different Shells/REPLs I got from
+`[iron.nvim](https://github.com/hkupty/iron.nvim)`.
 
 
-REQUIREMENTS ~
+==============================================================================
+3. Developer Documentation                    *teaman-developer-documentation*
+
+
+REQUIREMENTS                     *teaman-developer-documentation-requirements*
 
 
 - `luacheck` to lint the sources
