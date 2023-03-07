@@ -12,6 +12,12 @@ Terminal:send_text	teaman.txt	/*Terminal:send_text*
 Terminal:toggle	teaman.txt	/*Terminal:toggle*
 Terminals	teaman.txt	/*Terminals*
 teaman	teaman.txt	/*teaman*
+teaman-table-of-contents	teaman.txt	/*teaman-table-of-contents*
+teaman-user-documentation	teaman.txt	/*teaman-user-documentation*
+teaman-user-documentation-configuration	teaman.txt	/*teaman-user-documentation-configuration*
+teaman-user-documentation-developer-documentation	teaman.txt	/*teaman-user-documentation-developer-documentation*
+teaman-user-documentation-installation	teaman.txt	/*teaman-user-documentation-installation*
+teaman-user-documentation-usage	teaman.txt	/*teaman-user-documentation-usage*
 teaman.add	teaman.txt	/*teaman.add*
 teaman.config	teaman.txt	/*teaman.config*
 teaman.filter	teaman.txt	/*teaman.filter*
@@ -20,6 +26,7 @@ teaman.list	teaman.txt	/*teaman.list*
 teaman.map	teaman.txt	/*teaman.map*
 teaman.remove	teaman.txt	/*teaman.remove*
 teaman.terminal	teaman.txt	/*teaman.terminal*
+teaman.txt	teaman.txt	/*teaman.txt*
 teaman.utils	teaman.txt	/*teaman.utils*
 utils.covered_lines	teaman.txt	/*utils.covered_lines*
 utils.is_config	teaman.txt	/*utils.is_config*
