@@ -81,7 +81,7 @@ end
 ---@param arg table|nil @optional config table
 function utils.is_config(arg)
   vim.validate{
-    arg = {arg, {nil, "table"}},
+    arg = {{arg}, {nil, "table"}},
   }
   if arg ~= nil then
     local config = require("teaman.config").new()
