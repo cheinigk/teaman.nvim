@@ -1,4 +1,4 @@
-*teaman.txt*             For NVIM v0.8.0            Last change: 2023 March 07
+*teaman.txt*             For NVIM v0.8.0            Last change: 2023 March 09
 
 ==============================================================================
 Table of Contents                                   *teaman-table-of-contents*
@@ -183,7 +183,7 @@ Terminals                                                            *Terminals*
 
 
 teaman.add({config})                                                *teaman.add*
-    @brief Add a terminal
+    Add a terminal
 
     Parameters: ~
         {config}  (Config)  Config table
@@ -195,21 +195,21 @@ teaman.add({config})                                                *teaman.add*
 
 
 teaman.remove({term})                                            *teaman.remove*
-    @brief remove a terminal
+    Remove a terminal
 
     Parameters: ~
         {term}  (Terminal)  table
 
 
 teaman.list()                                                      *teaman.list*
-    @brief list all terminals
+    List all terminals
 
     Returns: ~
         (Terminals)  of Terminal objects
 
 
 teaman.filter({predicate})                                       *teaman.filter*
-    @brief filter terminals
+    Filter terminals
 
     Parameters: ~
         {predicate}  (function)  Predicate function used to filter the terminals
@@ -219,7 +219,7 @@ teaman.filter({predicate})                                       *teaman.filter*
 
 
 teaman.map({f})                                                     *teaman.map*
-    @brief apply a function for all terminals
+    Apply a function for all terminals
 
     Parameters: ~
         {f}  (function)  Function acting on a terminal object
