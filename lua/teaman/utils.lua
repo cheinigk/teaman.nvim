@@ -69,19 +69,11 @@ function utils.is_terminal(arg)
 
   return type(arg) == "table" and getmetatable(arg) == terminal_mt
 end
---   print(type(arg))
---   print(vim.inspect(getmetatable(arg)))
---   if type(arg) ~= "table" then
---     return false
---   end
---   local Terminal = require'teaman.terminal'
---   return getmetatable(arg) == getmetatable(Terminal)
--- end
 
 ---@param arg table|nil @optional config table
 function utils.is_config(arg)
   vim.validate{
-    arg = {{arg}, {nil, "table"}},
+    arg = {arg, {"nil", "table"}},
   }
   if arg ~= nil then
     local config = require("teaman.config").new()
