@@ -6,7 +6,7 @@ local teaman = {}
 ---@class Terminals Essentially just a list of Terminal objects
 local Terminals = {}
 
----@brief Add a terminal
+---Add a terminal
 ---@param config Config Config table
 ---@usage `require'teaman'.add(require'teaman.config'.new())`
 function teaman.add(config)
@@ -18,7 +18,7 @@ function teaman.add(config)
   return term
 end
 
----@brief remove a terminal
+---Remove a terminal
 ---@param term Terminal table
 function teaman.remove(term)
   vim.validate {
@@ -27,11 +27,11 @@ function teaman.remove(term)
   Terminals = vim.tbl_filter(function(t) return t ~= term end, Terminals)
 end
 
----@brief list all terminals
+---List all terminals
 ---@return Terminals list of Terminal objects
 function teaman.list() return Terminals end
 
----@brief filter terminals
+---Filter terminals
 ---@param predicate function Predicate function used to filter the terminals
 ---@return Terminals list of Terminal objects
 function teaman.filter(predicate)
@@ -41,7 +41,7 @@ function teaman.filter(predicate)
   return vim.tbl_filter(predicate, Terminals)
 end
 
----@brief apply a function for all terminals
+---Apply a function for all terminals
 ---@param f function Function acting on a terminal object
 ---@return Terminals list of Terminal objects
 function teaman.map(f)

@@ -1,4 +1,6 @@
 local eq = assert.are.same
+local describe = describe
+local it = it
 
 local function tbl_difference(t1, t2)
   local res = {}
@@ -12,6 +14,7 @@ end
 
 describe("Terminal wrapper:", function()
   describe("create a terminal object with default config:", function()
+    -- Set default config just to be save.
     vim.g.teaman = {
       shell = vim.fn.split(vim.o.shell),
       info = {},
