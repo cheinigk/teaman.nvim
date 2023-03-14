@@ -45,9 +45,10 @@ end
 
 ---@brief close the terminal window (does not close the terminal)
 function Terminal:close()
-  local winnr = self.winnr
-  self.winnr = nil
-  vim.api.nvim_win_close(winnr, false)
+  if self.winnr then
+    vim.api.nvim_win_close(self.winnr, false)
+    rawset(self, "winnr", nil)
+  end
 end
 
 ---@brief toggle the terminal window
@@ -70,10 +71,9 @@ function Terminal:quit()
     vim.fn.jobstop(self.chanid)
     -- on_exit will in turn call Terminal:quit
   else
-    local bufnr = self.bufnr
+    if self.bufnr then vim.api.nvim_buf_delete(self.bufnr, { force = true }) end
     rawset(self, "winnr", nil)
     rawset(self, "bufnr", nil)
-    vim.api.nvim_buf_delete(bufnr, { force = true })
   end
 end
 
