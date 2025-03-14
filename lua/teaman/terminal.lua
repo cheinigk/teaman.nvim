@@ -71,7 +71,7 @@ function Terminal:quit()
     vim.fn.jobstop(self.chanid)
     -- on_exit will in turn call Terminal:quit
   else
-    if self.bufnr then vim.api.nvim_buf_delete(self.bufnr, { force = true }) end
+    if self.bufnr and vim.api.nvim_buf_is_valid(self.bufnr) then vim.api.nvim_buf_delete(self.bufnr, { force = true }) end
     rawset(self, "winnr", nil)
     rawset(self, "bufnr", nil)
   end
