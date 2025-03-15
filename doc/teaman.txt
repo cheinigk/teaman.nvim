@@ -1,4 +1,4 @@
-*teaman.txt*             For NVIM v0.8.0            Last change: 2023 March 14
+*teaman.txt*             For NVIM v0.8.0            Last change: 2025 March 15
 
 ==============================================================================
 Table of Contents                                   *teaman-table-of-contents*
@@ -111,7 +111,6 @@ SIMILAR PLUGINS                    *teaman-user-documentation-similar-plugins*
 
 Before writing my own terminal manager, I used the following two plugins:
 
-
 - toggleterm.nvim <https://github.com/akinsho/toggleterm.nvim>
 - iron.nvim <https://github.com/hkupty/iron.nvim>
 
@@ -141,7 +140,6 @@ terminal and setting up different Shells/REPLs I got from `iron.nvim`
 
 
 REQUIREMENTS                     *teaman-developer-documentation-requirements*
-
 
 - `luacheck` to lint the sources
 - `stylua` to enforce a coding style
